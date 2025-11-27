@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bite Me's Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=MedievalSharp&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        body {
+            background-color: #1a0f0b;
+            color: #f5e6c8;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a0f0b"/><path d="M0,0 Q50,20 100,0 L100,100 Q50,80 0,100 Z" fill="%232d1a12" opacity="0.3"/></svg>');
+        }
+        
+        /* Main Hub Screen */
+        .screen {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+        }
+        
+        .header-banner {
+            height: 10%;
+            min-height: 60px;
+            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border: 2px solid #f5e6c8;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .header-banner h1 {
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: bold;
+            color: #1a0f0b;
+            text-shadow: 1px 1px 2px #f5e6c8;
+        }
+        
+        .points-display {
+            position: absolute;
+            right: 15px;
+            background-color: #1a0f0b;
+            color: #D4AF37;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(12px, 3vw, 14px);
+            border: 1px solid #b87333;
+        }
+        
+        .game-selectors {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .game-button {
+            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #1a0f0b;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 2px solid #f5e6c8;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .game-button::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle, transparent 20%, #D4AF37 70%);
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .game-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .game-button h2 {
+            font-size: clamp(14px, 4vw, 16px);
+            margin-bottom: 5px;
+            z-index: 1;
+        }
+        
+        .game-button p {
+            font-size: clamp(10px, 3vw, 12px);
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .action-bar {
+            height: 50px;
+            background-color: rgba(184, 115, 51, 0.3);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border: 1px solid #b87333;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        
+        .action-bar p {
+            color: #D4AF37;
+            font-weight: bold;
+            font-size: clamp(14px, 4vw, 16px);
+        }
+        
+        .bottom-nav {
+            height: 10%;
+            min-height: 50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            padding: 0 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #b87333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a0f0b;
+            font-weight: bold;
+            border: 1px solid #f5e6c8;
+            font-size: clamp(12px, 3vw, 14px);
+        }
+        
+        /* Remember Me Game Screen */
+        .remember-me {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            padding: 10px;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .timer {
+            font-size: clamp(16px, 5vw, 20px);
+            font-weight: bold;
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .retry-button {
+            background-color: #b87333;
+            color: #1a0f0b;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #f5e6c8;
+        }
+        
+        .card-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(16px, 4vw, 24px);
+            cursor: pointer;
+            transition: transform 0.3s;
+            transform-style: preserve-3d;
+            border: 1px solid #f5e6c8;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            transform: rotateY(180deg);
+        }
+        
+        .card-back {
+            background: #2d1a12;
+            border: 1px solid #b87333;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10,0 Q15,10 10,20 Q5,10 10,0 Z" fill="%23b87333" opacity="0.3"/></svg>');
+        }
+        
+        /* Slice Me Screen */
+        .slice-me {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            padding: 10px;
+        }
+        
+        .slice-me-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .slice-me-timer {
+            font-size: clamp(16px, 5vw, 20px);
+            font-weight: bold;
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .slice-me-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: rgba(45, 26, 18, 0.5);
+            border-radius: 15px;
+            border: 2px solid #b87333;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slice-stage {
+            width: 100%;
+            height: 80%;
+            position: relative;
+            background-color: rgba(26, 15, 11, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #b87333;
+        }
+        
+        .slice-item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .fruit {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF6B6B"/><path d="M30,30 Q50,10 70,30" stroke="%23FFE66D" stroke-width="5" fill="none"/></svg>');
+        }
+        
+        .bomb {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23333"/><path d="M30,30 L40,20 M70,30 L60,20 M50,20 L50,10" stroke="%23fff" stroke-width="5"/></svg>');
+        }
+        
+        .slice-score {
+            font-size: clamp(14px, 4vw, 18px);
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.7);
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .slice-controls {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        /* Catch Me Screen */
+        .catch-me {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            padding: 10px;
+        }
+        
+        .catch-me-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .catch-me-timer {
+            font-size: clamp(16px, 5vw, 20px);
+            font-weight: bold;
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .catch-me-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: rgba(45, 26, 18, 0.5);
+            border-radius: 15px;
+            border: 2px solid #b87333;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .catch-container {
+            width: 100%;
+            height: 80%;
+            position: relative;
+            background-color: rgba(26, 15, 11, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #b87333;
+        }
+        
+        .falling-item {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #f5e6c8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.1s;
+        }
+        
+        .falling-ball {
+            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+        }
+        
+        .falling-bomb {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            color: white;
+        }
+        
+        .basket {
+            width: 100px;
+            height: 60px;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            border: 2px solid #f5e6c8;
+            transition: transform 0.1s;
+        }
+        
+        .catch-score {
+            font-size: clamp(14px, 4vw, 18px);
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.7);
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 1px solid #b87333;
+        }
+        
+        .catch-controls {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        /* Game End Screens */
+        .game-end-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 15, 11, 0.95);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .end-message {
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #D4AF37;
+            text-shadow: 1px 1px 2px #1a0f0b;
+        }
+        
+        .discount-earned {
+            font-size: clamp(24px, 6vw, 32px);
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #b87333;
+            text-shadow: 1px 1px 2px #1a0f0b;
+        }
+        
+        .validity-info {
+            font-size: clamp(12px, 3vw, 16px);
+            margin-bottom: 20px;
+            text-align: center;
+            color: #f5e6c8;
+        }
+        
+        .action-button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            border: none;
+            border-radius: 20px;
+            color: #1a0f0b;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            border: 1px solid #f5e6c8;
+            font-size: clamp(12px, 3vw, 14px);
+        }
+        
+        /* Active Offer Display */
+        .active-offer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: #1a0f0b;
+            font-weight: bold;
+            z-index: 50;
+            display: none;
+            border: 1px solid #f5e6c8;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .offer-value {
+            font-size: clamp(14px, 4vw, 16px);
+        }
+        
+        .offer-timer {
+            font-size: clamp(10px, 3vw, 12px);
+        }
+        
+        /* Offers Screen */
+        .offers-screen {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .offers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .offers-title {
+            font-size: clamp(18px, 5vw, 24px);
+            color: #D4AF37;
+        }
+        
+        .offers-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+        
+        .offer-card {
+            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            border-radius: 10px;
+            padding: 15px;
+            color: #1a0f0b;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid #f5e6c8;
+            position: relative;
+        }
+        
+        .offer-card h3 {
+            font-size: clamp(14px, 4vw, 18px);
+            margin-bottom: 5px;
+        }
+        
+        .offer-card p {
+            font-size: clamp(12px, 3vw, 14px);
+            margin-bottom: 10px;
+        }
+        
+        .offer-card .validity {
+            font-size: clamp(10px, 3vw, 12px);
+            color: #1a0f0b;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .offer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .redeem-offer-btn {
+            padding: 8px 15px;
+            background: #1a0f0b;
+            color: #D4AF37;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #f5e6c8;
+            font-size: clamp(10px, 3vw, 12px);
+        }
+        
+        .expired-offer {
+            opacity: 0.7;
+        }
+        
+        .expired-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #1a0f0b;
+            color: #D4AF37;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #b87333;
+            color: #1a0f0b;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #f5e6c8;
+            z-index: 10;
+        }
+        
+        .start-notification {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(24px, 6vw, 32px);
+            font-weight: bold;
+            color: #D4AF37;
+            background-color: rgba(26, 15, 11, 0.8);
+            padding: 20px 40px;
+            border-radius: 15px;
+            z-index: 90;
+            display: none;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            .game-selectors {
+                gap: 8px;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+                gap: 4px;
+            }
+            
+            .basket {
+                width: 80px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Hub Screen -->
+    <div class="screen" id="main-screen">
+        <div class="header-banner">
+            <h1>Bite Me's Games</h1>
+            <div class="points-display">100</div>
+        </div>
+        
+        <div class="game-selectors">
+            <div class="game-button" id="remember-me-btn">
+                <h2>Remember Me</h2>
+                <p>Match & Win Up to 60% OFF</p>
+            </div>
+            <div class="game-button" id="slice-me-btn">
+                <h2>Slice Me</h2>
+                <p>Slice & Win Up to 50% OFF</p>
+            </div>
+            <div class="game-button" id="catch-me-btn">
+                <h2>Catch Me</h2>
+                <p>Catch balls & Win Up to 30% OFF</p>
+            </div>
+            <!-- Empty space where Find Me used to be -->
+            <div class="game-button" style="visibility: hidden;"></div>
+        </div>
+        
+        <div class="action-bar" id="my-offers-btn">
+            <p>My Rewards</p>
+        </div>
+        
+        <div class="bottom-nav">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-icon">👤</div>
+            <div class="nav-icon">📜</div>
+            <div class="nav-icon">⚙️</div>
+        </div>
+    </div>
+    
+    <!-- Remember Me Screen -->
+    <div class="remember-me" id="remember-me-screen">
+        <div class="game-header">
+            <div class="timer" id="remember-me-timer">45</div>
+            <button class="retry-button" id="remember-me-menu">←</button>
+        </div>
+        
+        <div class="card-grid" id="card-grid">
+            <!-- Cards will be generated by JavaScript -->
+        </div>
+        
+        <div class="start-notification" id="remember-me-start">START!</div>
+        
+        <!-- Remember Me End Screen -->
+        <div class="game-end-screen" id="remember-me-end-screen">
+            <div class="end-message" id="remember-me-end-message"></div>
+            <div class="discount-earned" id="remember-me-discount"></div>
+            <div class="validity-info" id="remember-me-validity"></div>
+            <div>
+                <button class="action-button" id="remember-me-redeem">Redeem Offer</button>
+                <button class="action-button" id="remember-me-menu-end">Go to Menu</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slice Me Screen -->
+    <div class="slice-me" id="slice-me-screen">
+        <div class="slice-me-header">
+            <div class="slice-me-timer" id="slice-me-timer">15</div>
+            <button class="retry-button" id="slice-me-menu">←</button>
+        </div>
+        
+        <div class="slice-me-area">
+            <div class="slice-stage" id="slice-stage">
+                <!-- Fruits will be generated by JavaScript -->
+            </div>
+            
+            <div class="slice-controls">
+                <div class="slice-score">Score: <span id="slice-score">0</span></div>
+                <button class="action-button" id="slice-start">Start Game</button>
+            </div>
+        </div>
+        
+        <!-- Slice Me End Screen -->
+        <div class="game-end-screen" id="slice-me-end-screen">
+            <div class="end-message" id="slice-me-end-message"></div>
+            <div class="discount-earned" id="slice-me-discount"></div>
+            <div class="validity-info" id="slice-me-validity"></div>
+            <div>
+                <button class="action-button" id="slice-me-redeem">Redeem Offer</button>
+                <button class="action-button" id="slice-me-menu-end">Go to Menu</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Catch Me Screen -->
+    <div class="catch-me" id="catch-me-screen">
+        <div class="catch-me-header">
+            <div class="catch-me-timer" id="catch-me-timer">20</div>
+            <button class="retry-button" id="catch-me-menu">←</button>
+        </div>
+        
+        <div class="catch-me-area">
+            <div class="catch-container" id="catch-container">
+                <div class="basket" id="basket"></div>
+                <!-- Falling items will be generated by JavaScript -->
+            </div>
+            
+            <div class="catch-controls">
+                <div class="catch-score">Score: <span id="catch-score">0</span></div>
+                <button class="action-button" id="catch-start">Start Game</button>
+            </div>
+        </div>
+        
+        <!-- Catch Me End Screen -->
+        <div class="game-end-screen" id="catch-me-end-screen">
+            <div class="end-message" id="catch-me-end-message"></div>
+            <div class="discount-earned" id="catch-me-discount"></div>
+            <div class="validity-info" id="catch-me-validity"></div>
+            <div>
+                <button class="action-button" id="catch-me-redeem">Redeem Offer</button>
+                <button class="action-button" id="catch-me-menu-end">Go to Menu</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Offers Screen -->
+    <div class="offers-screen" id="offers-screen">
+        <button class="back-button" id="offers-back">←</button>
+        <div class="offers-header">
+            <div class="offers-title">My Rewards</div>
+        </div>
+        
+        <div class="offers-container" id="offers-container">
+            <!-- Offers will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Active Offer Display -->
+    <div class="active-offer" id="active-offer">
+        <div class="offer-value" id="offer-value">0% OFF</div>
+        <div class="offer-timer" id="offer-timer">Valid for 4:00</div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mainScreen = document.getElementById('main-screen');
+        const rememberMeScreen = document.getElementById('remember-me-screen');
+        const sliceMeScreen = document.getElementById('slice-me-screen');
+        const catchMeScreen = document.getElementById('catch-me-screen');
+        const offersScreen = document.getElementById('offers-screen');
+        
+        const rememberMeBtn = document.getElementById('remember-me-btn');
+        const sliceMeBtn = document.getElementById('slice-me-btn');
+        const catchMeBtn = document.getElementById('catch-me-btn');
+        const myOffersBtn = document.getElementById('my-offers-btn');
+        
+        // Remember Me Elements
+        const rememberMeTimer = document.getElementById('remember-me-timer');
+        const rememberMeMenu = document.getElementById('remember-me-menu');
+        const cardGrid = document.getElementById('card-grid');
+        const rememberMeStart = document.getElementById('remember-me-start');
+        const rememberMeEndScreen = document.getElementById('remember-me-end-screen');
+        const rememberMeEndMessage = document.getElementById('remember-me-end-message');
+        const rememberMeDiscount = document.getElementById('remember-me-discount');
+        const rememberMeValidity = document.getElementById('remember-me-validity');
+        const rememberMeRedeem = document.getElementById('remember-me-redeem');
+        const rememberMeMenuEnd = document.getElementById('remember-me-menu-end');
+        
+        // Slice Me Elements
+        const sliceMeTimer = document.getElementById('slice-me-timer');
+        const sliceMeMenu = document.getElementById('slice-me-menu');
+        const sliceStage = document.getElementById('slice-stage');
+        const sliceScore = document.getElementById('slice-score');
+        const sliceStart = document.getElementById('slice-start');
+        const sliceMeEndScreen = document.getElementById('slice-me-end-screen');
+        const sliceMeEndMessage = document.getElementById('slice-me-end-message');
+        const sliceMeDiscount = document.getElementById('slice-me-discount');
+        const sliceMeValidity = document.getElementById('slice-me-validity');
+        const sliceMeRedeem = document.getElementById('slice-me-redeem');
+        const sliceMeMenuEnd = document.getElementById('slice-me-menu-end');
+        
+        // Catch Me Elements
+        const catchMeTimer = document.getElementById('catch-me-timer');
+        const catchMeMenu = document.getElementById('catch-me-menu');
+        const catchContainer = document.getElementById('catch-container');
+        const basket = document.getElementById('basket');
+        const catchScore = document.getElementById('catch-score');
+        const catchStart = document.getElementById('catch-start');
+        const catchMeEndScreen = document.getElementById('catch-me-end-screen');
+        const catchMeEndMessage = document.getElementById('catch-me-end-message');
+        const catchMeDiscount = document.getElementById('catch-me-discount');
+        const catchMeValidity = document.getElementById('catch-me-validity');
+        const catchMeRedeem = document.getElementById('catch-me-redeem');
+        const catchMeMenuEnd = document.getElementById('catch-me-menu-end');
+        
+        // Offers Elements
+        const offersBack = document.getElementById('offers-back');
+        const offersContainer = document.getElementById('offers-container');
+        
+        // Active Offer Elements
+        const activeOffer = document.getElementById('active-offer');
+        const offerValue = document.getElementById('offer-value');
+        const offerTimer = document.getElementById('offer-timer');
+        
+        // Game Variables
+        // Remember Me
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let rememberMeTimeLeft = 45;
+        let rememberMeTimerInterval;
+        let rememberMeGameActive = false;
+        let rememberMeDiscountValue = 0;
+        let rememberMeValidityTimer = 240; // 4 minutes
+        
+        // Slice Me
+        let sliceMeTimeLeft = 15;
+        let sliceMeTimerInterval;
+        let sliceMeScoreValue = 0;
+        let sliceMeGameActive = false;
+        let sliceMeDiscountValue = 0;
+        let sliceMeValidityTimer = 900; // 15 minutes
+        let sliceItems = [];
+        let sliceItemInterval;
+        
+        // Catch Me
+        let catchMeTimeLeft = 20;
+        let catchMeTimerInterval;
+        let catchMeScoreValue = 0;
+        let catchMeGameActive = false;
+        let catchMeDiscountValue = 0;
+        let catchMeValidityTimer = 900; // 15 minutes
+        let fallingItems = [];
+        let fallingItemInterval;
+        let basketPosition = 50; // Percentage from left
+        
+        // Active Offer Variables
+        let activeOfferTimer;
+        let currentOfferValue = 0;
+        let currentOfferTimeLeft = 0;
+        let allOffers = [];
+        let offersInterval;
+
+        // Initialize the application
+        function init() {
+            // Set up event listeners
+            rememberMeBtn.addEventListener('click', showRememberMe);
+            sliceMeBtn.addEventListener('click', showSliceMe);
+            catchMeBtn.addEventListener('click', showCatchMe);
+            myOffersBtn.addEventListener('click', showOffersScreen);
+            
+            rememberMeMenu.addEventListener('click', showMainScreen);
+            rememberMeRedeem.addEventListener('click', redeemRememberMeOffer);
+            rememberMeMenuEnd.addEventListener('click', showMainScreen);
+            
+            sliceMeMenu.addEventListener('click', showMainScreen);
+            sliceStart.addEventListener('click', startSliceMe);
+            sliceMeRedeem.addEventListener('click', redeemSliceMeOffer);
+            sliceMeMenuEnd.addEventListener('click', showMainScreen);
+            
+            catchMeMenu.addEventListener('click', showMainScreen);
+            catchStart.addEventListener('click', startCatchMe);
+            catchMeRedeem.addEventListener('click', redeemCatchMeOffer);
+            catchMeMenuEnd.addEventListener('click', showMainScreen);
+            
+            // Basket movement
+            catchContainer.addEventListener('mousemove', moveBasket);
+            catchContainer.addEventListener('touchmove', moveBasketTouch);
+            
+            offersBack.addEventListener('click', showMainScreen);
+            
+            // Load any saved offers
+            loadOffers();
+        }
+        
+        // Screen Navigation Functions
+        function showMainScreen() {
+            mainScreen.style.display = 'flex';
+            rememberMeScreen.style.display = 'none';
+            sliceMeScreen.style.display = 'none';
+            catchMeScreen.style.display = 'none';
+            offersScreen.style.display = 'none';
+            rememberMeEndScreen.style.display = 'none';
+            sliceMeEndScreen.style.display = 'none';
+            catchMeEndScreen.style.display = 'none';
+            
+            // Stop any running timers
+            clearInterval(rememberMeTimerInterval);
+            clearInterval(sliceMeTimerInterval);
+            clearInterval(catchMeTimerInterval);
+            clearInterval(activeOfferTimer);
+            clearInterval(sliceItemInterval);
+            clearInterval(fallingItemInterval);
+            clearInterval(offersInterval);
+            
+            // Reset games
+            resetSliceMe();
+            resetCatchMe();
+        }
+        
+        function showRememberMe() {
+            mainScreen.style.display = 'none';
+            rememberMeScreen.style.display = 'flex';
+            sliceMeScreen.style.display = 'none';
+            catchMeScreen.style.display = 'none';
+            offersScreen.style.display = 'none';
+            rememberMeEndScreen.style.display = 'none';
+            
+            resetRememberMe();
+        }
+        
+        function showSliceMe() {
+            mainScreen.style.display = 'none';
+            rememberMeScreen.style.display = 'none';
+            sliceMeScreen.style.display = 'flex';
+            catchMeScreen.style.display = 'none';
+            offersScreen.style.display = 'none';
+            sliceMeEndScreen.style.display = 'none';
+            
+            resetSliceMe();
+        }
+        
+        function showCatchMe() {
+            mainScreen.style.display = 'none';
+            rememberMeScreen.style.display = 'none';
+            sliceMeScreen.style.display = 'none';
+            catchMeScreen.style.display = 'flex';
+            offersScreen.style.display = 'none';
+            catchMeEndScreen.style.display = 'none';
+            
+            resetCatchMe();
+        }
+        
+        function showOffersScreen() {
+            mainScreen.style.display = 'none';
+            rememberMeScreen.style.display = 'none';
+            sliceMeScreen.style.display = 'none';
+            catchMeScreen.style.display = 'none';
+            offersScreen.style.display = 'flex';
+            
+            displayOffers();
+            
+            // Start interval to update offer timers
+            clearInterval(offersInterval);
+            offersInterval = setInterval(updateOffersTimers, 1000);
+        }
+        
+        // Remember Me Functions
+        function resetRememberMe() {
+            // Clear previous game state
+            memoryCards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            rememberMeTimeLeft = 45;
+            rememberMeGameActive = false;
+            rememberMeTimer.textContent = rememberMeTimeLeft;
+            
+            // Clear card grid
+            cardGrid.innerHTML = '';
+            
+            // Create card pairs (12 pairs = 24 cards)
+            const symbols = ['🍎', '🍌', '🍒', '🍇', '🍊', '🍓', '🍉', '🍑', '🥭', '🍍', '🥝', '🍋'];
+            
+            // Duplicate symbols to create pairs
+            const cardSymbols = [...symbols, ...symbols];
+            
+            // Shuffle the symbols
+            for (let i = cardSymbols.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardSymbols[i], cardSymbols[j]] = [cardSymbols[j], cardSymbols[i]];
+            }
+            
+            // Create cards
+            for (let i = 0; i < 24; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.symbol = cardSymbols[i];
+                
+                const cardFront = document.createElement('div');
+                cardFront.className = 'card-front';
+                cardFront.textContent = cardSymbols[i];
+                
+                const cardBack = document.createElement('div');
+                cardBack.className = 'card-back';
+                
+                card.appendChild(cardFront);
+                card.appendChild(cardBack);
+                
+                card.addEventListener('click', () => flipCard(card));
+                
+                cardGrid.appendChild(card);
+                memoryCards.push(card);
+            }
+            
+            // Show all cards briefly at start
+            setTimeout(() => {
+                memoryCards.forEach(card => card.classList.add('flipped'));
+                
+                setTimeout(() => {
+                    memoryCards.forEach(card => card.classList.remove('flipped'));
+                    
+                    // Show "START!" notification for 1 second
+                    rememberMeStart.style.display = 'block';
+                    setTimeout(() => {
+                        rememberMeStart.style.display = 'none';
+                        startRememberMeTimer();
+                    }, 1000);
+                }, 2000);
+            }, 500);
+        }
+        
+        function flipCard(card) {
+            if (!rememberMeGameActive || card.classList.contains('flipped') || flippedCards.length >= 2) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                checkForMatch();
+            }
+        }
+        
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                // Match found
+                matchedPairs++;
+                flippedCards = [];
+                
+                if (matchedPairs === 12) {
+                    // All pairs found - win game
+                    endRememberMe(true);
+                }
+            } else {
+                // No match - flip cards back after a delay
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+        
+        function startRememberMeTimer() {
+            rememberMeGameActive = true;
+            clearInterval(rememberMeTimerInterval);
+            rememberMeTimerInterval = setInterval(() => {
+                rememberMeTimeLeft--;
+                rememberMeTimer.textContent = rememberMeTimeLeft;
+                
+                if (rememberMeTimeLeft <= 0) {
+                    endRememberMe(false);
+                }
+            }, 1000);
+        }
+        
+        function endRememberMe(isWin) {
+            rememberMeGameActive = false;
+            clearInterval(rememberMeTimerInterval);
+            
+            // Calculate discount based on matched pairs (max 50%, advertised as 60%)
+            rememberMeDiscountValue = Math.min(50, Math.floor((matchedPairs / 12) * 50));
+            
+            rememberMeEndScreen.style.display = 'flex';
+            
+            if (isWin) {
+                rememberMeEndMessage.textContent = '🎉 Congratulations! You Did It! 🎉';
+                rememberMeDiscount.textContent = `You've earned ${rememberMeDiscountValue}% OFF!`;
+                rememberMeValidity.textContent = 'Offer is valid for the next 4 minutes!';
+            } else {
+                rememberMeEndMessage.textContent = 'Time\'s Up!';
+                rememberMeDiscount.textContent = `You've earned ${rememberMeDiscountValue}% OFF!`;
+                rememberMeValidity.textContent = 'Offer is valid for the next 4 minutes!';
+            }
+            
+            // Set active offer
+            setActiveOffer(rememberMeDiscountValue, 240, 'Remember Me'); // 4 minutes
+        }
+        
+        function redeemRememberMeOffer() {
+            alert(`Congratulations! You've redeemed your ${rememberMeDiscountValue}% discount!`);
+            hideActiveOffer();
+            showMainScreen();
+        }
+        
+        // Slice Me Functions
+        function resetSliceMe() {
+            sliceMeTimeLeft = 15;
+            sliceMeScoreValue = 0;
+            sliceMeGameActive = false;
+            sliceMeTimer.textContent = sliceMeTimeLeft;
+            sliceScore.textContent = sliceMeScoreValue;
+            sliceStart.textContent = 'Start Game';
+            sliceStart.disabled = false;
+            
+            clearInterval(sliceMeTimerInterval);
+            clearInterval(sliceItemInterval);
+            
+            // Clear stage
+            sliceStage.innerHTML = '';
+            sliceItems = [];
+        }
+        
+        function startSliceMe() {
+            sliceMeGameActive = true;
+            sliceStart.disabled = true;
+            sliceStart.textContent = 'Playing...';
+            
+            // Start timer
+            clearInterval(sliceMeTimerInterval);
+            sliceMeTimerInterval = setInterval(() => {
+                sliceMeTimeLeft--;
+                sliceMeTimer.textContent = sliceMeTimeLeft;
+                
+                if (sliceMeTimeLeft <= 0) {
+                    endSliceMe();
+                }
+            }, 1000);
+            
+            // Start generating fruits and bombs
+            sliceItemInterval = setInterval(createSliceItem, 200);
+        }
+        
+        function createSliceItem() {
+            if (!sliceMeGameActive) return;
+            
+            const item = document.createElement('div');
+            const isBomb = Math.random() < 0.3; // 30% chance of bomb
+            
+            item.className = `slice-item ${isBomb ? 'bomb' : 'fruit'}`;
+            item.dataset.type = isBomb ? 'bomb' : 'fruit';
+            
+            // Random position at the bottom
+            const stageRect = sliceStage.getBoundingClientRect();
+            const x = Math.random() * (stageRect.width - 60);
+            item.style.left = `${x}px`;
+            item.style.bottom = '0px';
+            
+            // Add to stage
+            sliceStage.appendChild(item);
+            sliceItems.push(item);
+            
+            // Animate item moving upward - 10x to 20x faster
+            let position = 0;
+            const speed = (10 + Math.random() * 10); // 10x to 20x faster
+            
+            const moveItem = setInterval(() => {
+                if (!sliceMeGameActive) {
+                    clearInterval(moveItem);
+                    return;
+                }
+                
+                position += speed;
+                item.style.bottom = `${position}px`;
+                
+                // Remove if out of bounds
+                if (position > stageRect.height) {
+                    clearInterval(moveItem);
+                    item.remove();
+                    const index = sliceItems.indexOf(item);
+                    if (index > -1) sliceItems.splice(index, 1);
+                }
+            }, 50);
+            
+            // Click event to slice item
+            item.addEventListener('click', () => {
+                if (item.dataset.type === 'bomb') {
+                    // Game over if bomb is clicked
+                    endSliceMe(false);
+                } else {
+                    // Increase score for fruit
+                    sliceMeScoreValue++;
+                    sliceScore.textContent = sliceMeScoreValue;
+                    
+                    // Visual feedback
+                    item.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        item.style.transform = 'scale(1)';
+                    }, 100);
+                }
+                
+                // Remove item
+                clearInterval(moveItem);
+                item.remove();
+                const index = sliceItems.indexOf(item);
+                if (index > -1) sliceItems.splice(index, 1);
+            });
+        }
+        
+        function endSliceMe(isWin = true) {
+            sliceMeGameActive = false;
+            clearInterval(sliceMeTimerInterval);
+            clearInterval(sliceItemInterval);
+            
+            // Clear all items
+            sliceItems.forEach(item => item.remove());
+            sliceItems = [];
+            
+            // Calculate discount based on score (max 30%, advertised as 50%)
+            // With high speed and bombs, it's very hard to score high
+            sliceMeDiscountValue = Math.min(30, Math.floor(sliceMeScoreValue / 5));
+            
+            sliceMeEndScreen.style.display = 'flex';
+            
+            if (isWin && sliceMeDiscountValue > 0) {
+                sliceMeEndMessage.textContent = '🥷 Ninja Master! 🥷';
+                sliceMeDiscount.textContent = `You've earned ${sliceMeDiscountValue}% OFF!`;
+                sliceMeValidity.textContent = 'Offer is valid for the next 15 minutes!';
+            } else {
+                sliceMeEndMessage.textContent = isWin ? 'Good Try!' : 'Bomb Hit! Game Over!';
+                sliceMeDiscount.textContent = isWin ? `You've earned ${sliceMeDiscountValue}% OFF!` : '';
+                sliceMeValidity.textContent = isWin ? 'Offer is valid for the next 15 minutes!' : 'Be careful with bombs next time!';
+            }
+            
+            // Set active offer if discount was earned
+            if (sliceMeDiscountValue > 0 && isWin) {
+                setActiveOffer(sliceMeDiscountValue, 900, 'Slice Me'); // 15 minutes
+            }
+        }
+        
+        function redeemSliceMeOffer() {
+            if (sliceMeDiscountValue > 0) {
+                alert(`Congratulations! You've redeemed your ${sliceMeDiscountValue}% discount!`);
+                hideActiveOffer();
+            }
+            showMainScreen();
+        }
+        
+        // Catch Me Functions
+        function resetCatchMe() {
+            catchMeTimeLeft = 20;
+            catchMeScoreValue = 0;
+            catchMeGameActive = false;
+            catchMeTimer.textContent = catchMeTimeLeft;
+            catchScore.textContent = catchMeScoreValue;
+            catchStart.textContent = 'Start Game';
+            catchStart.disabled = false;
+            
+            // Reset basket position
+            basketPosition = 50;
+            basket.style.left = `${basketPosition}%`;
+            
+            clearInterval(catchMeTimerInterval);
+            clearInterval(fallingItemInterval);
+            
+            // Clear container
+            catchContainer.innerHTML = '';
+            catchContainer.appendChild(basket);
+            fallingItems = [];
+        }
+        
+        function startCatchMe() {
+            catchMeGameActive = true;
+            catchStart.disabled = true;
+            catchStart.textContent = 'Playing...';
+            
+            // Start timer
+            clearInterval(catchMeTimerInterval);
+            catchMeTimerInterval = setInterval(() => {
+                catchMeTimeLeft--;
+                catchMeTimer.textContent = catchMeTimeLeft;
+                
+                if (catchMeTimeLeft <= 0) {
+                    endCatchMe();
+                }
+            }, 1000);
+            
+            // Start generating falling items (balls and bombs)
+            fallingItemInterval = setInterval(createFallingItem, 350); // Reduced interval for more items
+        }
+        
+        function createFallingItem() {
+            if (!catchMeGameActive) return;
+            
+            const item = document.createElement('div');
+            // Increased bomb probability to 40% for more challenge
+            const isBomb = Math.random() < 0.4;
+            
+            item.className = `falling-item ${isBomb ? 'falling-bomb' : 'falling-ball'}`;
+            item.dataset.type = isBomb ? 'bomb' : 'ball';
+            item.textContent = isBomb ? '💣' : '⚪';
+            
+            // Random position at the top
+            const containerRect = catchContainer.getBoundingClientRect();
+            const x = Math.random() * (containerRect.width - 30);
+            item.style.left = `${x}px`;
+            item.style.top = '0px';
+            
+            // Add to container
+            catchContainer.appendChild(item);
+            fallingItems.push(item);
+            
+            // Animate item falling at high speed - increased speed for challenge
+            let position = 0;
+            const speed = 12 + Math.random() * 12; // Increased speed range
+            
+            const moveItem = setInterval(() => {
+                if (!catchMeGameActive) {
+                    clearInterval(moveItem);
+                    return;
+                }
+                
+                position += speed;
+                item.style.top = `${position}px`;
+                
+                // Check if item is caught by basket
+                const itemRect = item.getBoundingClientRect();
+                const basketRect = basket.getBoundingClientRect();
+                
+                if (itemRect.bottom >= basketRect.top && 
+                    itemRect.left >= basketRect.left && 
+                    itemRect.right <= basketRect.right) {
+                    // Item caught!
+                    if (item.dataset.type === 'bomb') {
+                        // Bomb caught - deduct 10 points
+                        catchMeScoreValue = Math.max(0, catchMeScoreValue - 10);
+                        catchScore.textContent = catchMeScoreValue;
+                        
+                        // Visual feedback
+                        item.style.backgroundColor = '#FF0000';
+                        item.style.color = '#FFFFFF';
+                        item.style.transform = 'scale(1.5)';
+                        
+                        // Shake basket for bomb feedback
+                        basket.style.transform = 'translateX(-50%) scale(1.1)';
+                        setTimeout(() => {
+                            basket.style.transform = 'translateX(-50%) scale(1)';
+                        }, 200);
+                    } else {
+                        // Ball caught - add 2 points
+                        catchMeScoreValue += 2;
+                        catchScore.textContent = catchMeScoreValue;
+                        
+                        // Visual feedback
+                        item.style.backgroundColor = '#00FF00';
+                        item.style.transform = 'scale(1.2)';
+                    }
+                    
+                    // Remove item after a short delay
+                    setTimeout(() => {
+                        clearInterval(moveItem);
+                        item.remove();
+                        const index = fallingItems.indexOf(item);
+                        if (index > -1) fallingItems.splice(index, 1);
+                    }, 200);
+                }
+                
+                // Remove if out of bounds
+                if (position > containerRect.height) {
+                    clearInterval(moveItem);
+                    item.remove();
+                    const index = fallingItems.indexOf(item);
+                    if (index > -1) fallingItems.splice(index, 1);
+                }
+            }, 50);
+        }
+        
+        function moveBasket(e) {
+            if (!catchMeGameActive) return;
+            
+            const containerRect = catchContainer.getBoundingClientRect();
+            const x = e.clientX - containerRect.left;
+            basketPosition = (x / containerRect.width) * 100;
+            
+            // Keep basket within bounds
+            if (basketPosition < 10) basketPosition = 10;
+            if (basketPosition > 90) basketPosition = 90;
+            
+            basket.style.left = `${basketPosition}%`;
+        }
+        
+        function moveBasketTouch(e) {
+            if (!catchMeGameActive) return;
+            
+            const containerRect = catchContainer.getBoundingClientRect();
+            const touch = e.touches[0];
+            const x = touch.clientX - containerRect.left;
+            basketPosition = (x / containerRect.width) * 100;
+            
+            // Keep basket within bounds
+            if (basketPosition < 10) basketPosition = 10;
+            if (basketPosition > 90) basketPosition = 90;
+            
+            basket.style.left = `${basketPosition}%`;
+            
+            // Prevent default to avoid scrolling
+            e.preventDefault();
+        }
+        
+        function endCatchMe() {
+            catchMeGameActive = false;
+            clearInterval(catchMeTimerInterval);
+            clearInterval(fallingItemInterval);
+            
+            // Clear all items
+            fallingItems.forEach(item => item.remove());
+            fallingItems = [];
+            
+            // Calculate discount based on score with balanced difficulty
+            // 20 points = 5% discount, but with increased difficulty
+            // Most players will get 15%, only 2% will get 20%
+            let baseDiscount = Math.floor(catchMeScoreValue / 20) * 5;
+            
+            // Add skill-based adjustment (only 2% of players will get this)
+            const skillBonus = Math.random() < 0.02 ? 5 : 0;
+            
+            // Cap at 20% maximum
+            catchMeDiscountValue = Math.min(20, baseDiscount + skillBonus);
+            
+            catchMeEndScreen.style.display = 'flex';
+            
+            if (catchMeDiscountValue > 0) {
+                if (catchMeDiscountValue >= 20) {
+                    catchMeEndMessage.textContent = '🏆 MASTER CATCHER! 🏆';
+                } else if (catchMeDiscountValue >= 15) {
+                    catchMeEndMessage.textContent = '🌟 Excellent! 🌟';
+                } else {
+                    catchMeEndMessage.textContent = 'Good Job!';
+                }
+                catchMeDiscount.textContent = `You've earned ${catchMeDiscountValue}% OFF!`;
+                catchMeValidity.textContent = 'Offer is valid for the next 15 minutes!';
+            } else {
+                catchMeEndMessage.textContent = 'Better Luck Next Time!';
+                catchMeDiscount.textContent = '';
+                catchMeValidity.textContent = 'Keep trying to win discounts!';
+            }
+            
+            // Set active offer if discount was earned
+            if (catchMeDiscountValue > 0) {
+                setActiveOffer(catchMeDiscountValue, 900, 'Catch Me'); // 15 minutes
+            }
+        }
+        
+        function redeemCatchMeOffer() {
+            if (catchMeDiscountValue > 0) {
+                alert(`Congratulations! You've redeemed your ${catchMeDiscountValue}% discount!`);
+                hideActiveOffer();
+            }
+            showMainScreen();
+        }
+        
+        // Active Offer Functions
+        function setActiveOffer(discount, timeInSeconds, gameName) {
+            currentOfferValue = discount;
+            currentOfferTimeLeft = timeInSeconds;
+            
+            offerValue.textContent = `${discount}% OFF`;
+            updateOfferTimer();
+            activeOffer.style.display = 'block';
+            
+            // Save offer to list
+            const offer = {
+                id: Date.now(),
+                discount: discount,
+                timeLeft: timeInSeconds,
+                game: gameName,
+                createdAt: new Date(),
+                expiresAt: new Date(Date.now() + timeInSeconds * 1000)
+            };
+            
+            allOffers.push(offer);
+            saveOffers();
+            
+            // Start offer countdown
+            clearInterval(activeOfferTimer);
+            activeOfferTimer = setInterval(() => {
+                currentOfferTimeLeft--;
+                updateOfferTimer();
+                
+                if (currentOfferTimeLeft <= 0) {
+                    hideActiveOffer();
+                }
+            }, 1000);
+        }
+        
+        function updateOfferTimer() {
+            const minutes = Math.floor(currentOfferTimeLeft / 60);
+            const seconds = currentOfferTimeLeft % 60;
+            offerTimer.textContent = `Valid for ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        function hideActiveOffer() {
+            activeOffer.style.display = 'none';
+            clearInterval(activeOfferTimer);
+        }
+        
+        // Offers Management
+        function saveOffers() {
+            localStorage.setItem('biteMeOffers', JSON.stringify(allOffers));
+        }
+        
+        function loadOffers() {
+            const savedOffers = localStorage.getItem('biteMeOffers');
+            if (savedOffers) {
+                allOffers = JSON.parse(savedOffers);
+                
+                // Filter out expired offers
+                const now = new Date();
+                allOffers = allOffers.filter(offer => {
+                    return new Date(offer.expiresAt) > now;
+                });
+                
+                saveOffers();
+            }
+        }
+        
+        function displayOffers() {
+            offersContainer.innerHTML = '';
+            
+            if (allOffers.length === 0) {
+                offersContainer.innerHTML = '<div class="offer-card"><p>No active offers. Play games to win discounts!</p></div>';
+                return;
+            }
+            
+            allOffers.forEach((offer, index) => {
+                const offerCard = document.createElement('div');
+                offerCard.className = 'offer-card';
+                offerCard.dataset.offerId = offer.id;
+                
+                const timeLeft = calculateTimeLeft(offer);
+                const isExpired = timeLeft === 'Expired';
+                
+                if (isExpired) {
+                    offerCard.classList.add('expired-offer');
+                }
+                
+                offerCard.innerHTML = `
+                    ${isExpired ? '<div class="expired-label">EXPIRED</div>' : ''}
+                    <h3>${offer.discount}% OFF</h3>
+                    <p>From ${offer.game}</p>
+                    <div class="validity">${isExpired ? 'Offer expired' : `Valid for: ${timeLeft}`}</div>
+                    <div class="offer-actions">
+                        <div class="offer-time">${isExpired ? 'Expired' : timeLeft}</div>
+                        <button class="redeem-offer-btn" ${isExpired ? 'disabled' : ''}>Redeem</button>
+                    </div>
+                `;
+                
+                // Add event listener to redeem button
+                const redeemBtn = offerCard.querySelector('.redeem-offer-btn');
+                redeemBtn.addEventListener('click', () => {
+                    redeemSpecificOffer(offer.id);
+                });
+                
+                offersContainer.appendChild(offerCard);
+            });
+        }
+        
+        function updateOffersTimers() {
+            const offerCards = document.querySelectorAll('.offer-card');
+            
+            offerCards.forEach(card => {
+                const offerId = parseInt(card.dataset.offerId);
+                const offer = allOffers.find(o => o.id === offerId);
+                
+                if (offer) {
+                    const timeLeft = calculateTimeLeft(offer);
+                    const isExpired = timeLeft === 'Expired';
+                    
+                    const timeElement = card.querySelector('.offer-time');
+                    const validityElement = card.querySelector('.validity');
+                    const redeemBtn = card.querySelector('.redeem-offer-btn');
+                    
+                    if (timeElement) timeElement.textContent = isExpired ? 'Expired' : timeLeft;
+                    if (validityElement) validityElement.textContent = isExpired ? 'Offer expired' : `Valid for: ${timeLeft}`;
+                    
+                    if (isExpired) {
+                        card.classList.add('expired-offer');
+                        redeemBtn.disabled = true;
+                        
+                        // Add expired label if not already there
+                        if (!card.querySelector('.expired-label')) {
+                            card.innerHTML = '<div class="expired-label">EXPIRED</div>' + card.innerHTML;
+                        }
+                    }
+                }
+            });
+            
+            // Remove expired offers from array
+            const now = new Date();
+            allOffers = allOffers.filter(offer => {
+                return new Date(offer.expiresAt) > now;
+            });
+            
+            saveOffers();
+        }
+        
+        function calculateTimeLeft(offer) {
+            const now = new Date();
+            const offerEnd = new Date(offer.expiresAt);
+            
+            if (offerEnd <= now) {
+                return 'Expired';
+            }
+            
+            const diffMs = offerEnd - now;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffSecs = Math.floor((diffMs % 60000) / 1000);
+            
+            return `${diffMins}:${diffSecs.toString().padStart(2, '0')}`;
+        }
+        
+        function redeemSpecificOffer(offerId) {
+            const offerIndex = allOffers.findIndex(o => o.id === offerId);
+            
+            if (offerIndex !== -1) {
+                const offer = allOffers[offerIndex];
+                alert(`Congratulations! You've redeemed your ${offer.discount}% discount from ${offer.game}!`);
+                
+                // Remove the offer
+                allOffers.splice(offerIndex, 1);
+                saveOffers();
+                
+                // Update the display
+                displayOffers();
+            }
+        }
+        
+        // Initialize the application when the page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
