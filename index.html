@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bite Me's Games</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=MedievalSharp&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=MedievalSharp&family=Playfair+Display:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles */
+        /* Base Styles with Indian Festival Theme */
         * {
             margin: 0;
             padding: 0;
@@ -15,13 +15,57 @@
         }
         
         body {
-            background-color: #1a0f0b;
-            color: #f5e6c8;
+            background-color: #fff9f0;
+            color: #5c3d2e;
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a0f0b"/><path d="M0,0 Q50,20 100,0 L100,100 Q50,80 0,100 Z" fill="%232d1a12" opacity="0.3"/></svg>');
+            position: relative;
+        }
+        
+        /* Indian Festival Background with Map and Food Icons */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                /* India Map Silhouette */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000"><path d="M400,50 C450,100 500,150 550,200 C600,250 650,300 650,350 C650,400 600,450 550,500 C500,550 450,600 400,650 C350,700 300,750 250,800 C200,850 150,900 100,950 C50,1000 0,950 0,900 C0,850 50,800 100,750 C150,700 200,650 250,600 C300,550 350,500 400,450 C450,400 500,350 550,300 C600,250 650,200 650,150 C650,100 600,50 550,0 C500,-50 450,0 400,50 Z" fill="%23f8e5d6" opacity="0.4"/></svg>'),
+                /* Momos for North */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="60" height="60"><circle cx="50" cy="50" r="45" fill="%23ffb6c1" opacity="0.6"/><path d="M30,60 Q50,30 70,60 Z" fill="%23ffccd5" opacity="0.7"/></svg>'),
+                /* Rasgulla for East */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="70" height="70"><circle cx="50" cy="50" r="40" fill="%23fff0f5" opacity="0.6"/><circle cx="50" cy="50" r="30" fill="%23ffe4e1" opacity="0.8"/></svg>'),
+                /* Pani Puri for Central */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="65" height="65"><circle cx="50" cy="50" r="40" fill="%23f5deb3" opacity="0.7"/><circle cx="50" cy="50" r="25" fill="%23d2b48c" opacity="0.9"/></svg>'),
+                /* Volcano Soda for South */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="55" height="55"><rect x="30" y="40" width="40" height="50" rx="10" fill="%23add8e6" opacity="0.7"/><ellipse cx="50" cy="40" rx="20" ry="10" fill="%2387ceeb" opacity="0.8"/></svg>'),
+                /* Paan with Smoke */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50"><ellipse cx="50" cy="60" rx="25" ry="15" fill="%2390ee90" opacity="0.7"/><path d="M60,50 Q70,40 80,30 Q85,25 90,20" stroke="%23e6e6fa" stroke-width="3" fill="none" opacity="0.5"/></svg>'),
+                /* Sweet Corn */
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="75" height="75"><ellipse cx="50" cy="50" rx="30" ry="20" fill="%23fffacd" opacity="0.7"/><circle cx="40" cy="45" r="5" fill="%23ffd700" opacity="0.9"/><circle cx="50" cy="50" r="5" fill="%23ffd700" opacity="0.9"/><circle cx="60" cy="45" r="5" fill="%23ffd700" opacity="0.9"/></svg>');
+            background-position: 
+                center center,
+                15% 20%,
+                85% 30%,
+                50% 70%,
+                25% 80%,
+                75% 15%,
+                40% 90%;
+            background-repeat: no-repeat;
+            background-size: 
+                80% auto,
+                auto auto,
+                auto auto,
+                auto auto,
+                auto auto,
+                auto auto,
+                auto auto;
+            z-index: -1;
+            opacity: 0.6;
         }
         
         /* Main Hub Screen */
@@ -34,38 +78,104 @@
             width: 100%;
         }
         
+        /* Updated Header Banner with Indian Theme */
         .header-banner {
-            height: 10%;
-            min-height: 60px;
-            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
-            border-radius: 15px;
+            height: 12%;
+            min-height: 70px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            border-radius: 15px 15px 0 0;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            border: 2px solid #f5e6c8;
+            margin-bottom: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 3px solid #ffd166;
             font-family: 'Cinzel', serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23ffd166" stroke-width="3"/><path d="M10,10 L90,10 L90,90 L10,90 Z" fill="none" stroke="%23ffd166" stroke-width="2"/></svg>');
         }
         
         .header-banner h1 {
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: clamp(20px, 6vw, 28px);
             font-weight: bold;
-            color: #1a0f0b;
-            text-shadow: 1px 1px 2px #f5e6c8;
+            color: #5c3d2e;
+            text-shadow: 1px 1px 2px #ffd166;
+            letter-spacing: 1px;
+        }
+        
+        /* Location and Date Box */
+        .location-date-box {
+            height: 8%;
+            min-height: 50px;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd166;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .location-date-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,50 Q25,40 50,50 T100,50" fill="none" stroke="%23ffd166" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 100% 100%;
+            opacity: 0.3;
+        }
+        
+        .location, .date {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .location {
+            font-size: clamp(10px, 2.5vw, 14px);
+            font-family: 'Kalam', cursive;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .date {
+            font-size: clamp(14px, 3.5vw, 20px); /* 2 sizes larger than location */
+            font-family: 'Cinzel', serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .location::before {
+            content: "📍 ";
+            margin-right: 5px;
+            font-size: 14px;
+        }
+        
+        .date::before {
+            content: "📅 ";
+            margin-right: 5px;
         }
         
         .points-display {
             position: absolute;
             right: 15px;
-            background-color: #1a0f0b;
-            color: #D4AF37;
-            padding: 5px 10px;
+            background-color: #5c3d2e;
+            color: #ffd166;
+            padding: 5px 15px;
             border-radius: 20px;
             font-weight: bold;
             font-size: clamp(12px, 3vw, 14px);
-            border: 1px solid #b87333;
+            border: 1px solid #ffd166;
+            font-family: 'Kalam', cursive;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .game-selectors {
@@ -78,18 +188,18 @@
         }
         
         .game-button {
-            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
             border-radius: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #1a0f0b;
+            color: #5c3d2e;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: transform 0.2s;
-            border: 2px solid #f5e6c8;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #ffd166;
             position: relative;
             overflow: hidden;
             text-align: center;
@@ -103,44 +213,53 @@
             left: -10px;
             right: -10px;
             bottom: -10px;
-            background: radial-gradient(circle, transparent 20%, #D4AF37 70%);
+            background: radial-gradient(circle, transparent 20%, #ff9a76 70%);
             opacity: 0.2;
             z-index: 0;
         }
         
         .game-button:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
         
         .game-button h2 {
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: clamp(14px, 4vw, 18px);
             margin-bottom: 5px;
             z-index: 1;
+            font-family: 'Cinzel', serif;
         }
         
         .game-button p {
-            font-size: clamp(10px, 3vw, 12px);
+            font-size: clamp(10px, 3vw, 13px);
             z-index: 1;
             text-align: center;
+            font-family: 'Kalam', cursive;
         }
         
         .action-bar {
             height: 50px;
-            background-color: rgba(184, 115, 51, 0.3);
+            background: linear-gradient(135deg, #ffd166 0%, #ffb347 100%);
             border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ff6b6b;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .action-bar:hover {
+            transform: scale(1.02);
         }
         
         .action-bar p {
-            color: #D4AF37;
+            color: #5c3d2e;
             font-weight: bold;
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: clamp(14px, 4vw, 18px);
+            font-family: 'Cinzel', serif;
         }
         
         .bottom-nav {
@@ -149,24 +268,25 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            background-color: rgba(212, 175, 55, 0.1);
+            background-color: rgba(255, 209, 102, 0.3);
             border-radius: 10px;
             padding: 0 10px;
-            border: 1px solid #b87333;
+            border: 1px solid #ff6b6b;
         }
         
         .nav-icon {
-            width: 30px;
-            height: 30px;
-            background-color: #b87333;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1a0f0b;
+            color: #fff;
             font-weight: bold;
-            border: 1px solid #f5e6c8;
+            border: 1px solid #ffd166;
             font-size: clamp(12px, 3vw, 14px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         /* Remember Me Game Screen */
@@ -185,18 +305,20 @@
         }
         
         .timer {
-            font-size: clamp(16px, 5vw, 20px);
+            font-size: clamp(16px, 5vw, 22px);
             font-weight: bold;
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.7);
-            padding: 5px 10px;
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 15px;
             border-radius: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .retry-button {
-            background-color: #b87333;
-            color: #1a0f0b;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
+            color: #fff;
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -205,7 +327,9 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border: 1px solid #f5e6c8;
+            border: 2px solid #ffd166;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .card-grid {
@@ -218,16 +342,17 @@
         }
         
         .card {
-            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
-            border-radius: 5px;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(16px, 4vw, 24px);
+            font-size: clamp(18px, 4vw, 26px);
             cursor: pointer;
             transition: transform 0.3s;
             transform-style: preserve-3d;
-            border: 1px solid #f5e6c8;
+            border: 2px solid #ffd166;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .card.flipped {
@@ -239,24 +364,25 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 5px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
         .card-front {
-            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            background: linear-gradient(135deg, #ffd166 0%, #ffb347 100%);
             transform: rotateY(180deg);
+            color: #5c3d2e;
         }
         
         .card-back {
-            background: #2d1a12;
-            border: 1px solid #b87333;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10,0 Q15,10 10,20 Q5,10 10,0 Z" fill="%23b87333" opacity="0.3"/></svg>');
+            background: #fff;
+            border: 2px solid #ff9a76;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10,0 Q15,10 10,20 Q5,10 10,0 Z" fill="%23ff9a76" opacity="0.3"/></svg>');
         }
         
-        /* Slice Me Screen */
+        /* Slice Me Screen with Fruits */
         .slice-me {
             display: none;
             height: 100%;
@@ -272,13 +398,15 @@
         }
         
         .slice-me-timer {
-            font-size: clamp(16px, 5vw, 20px);
+            font-size: clamp(16px, 5vw, 22px);
             font-weight: bold;
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.7);
-            padding: 5px 10px;
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 15px;
             border-radius: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .slice-me-area {
@@ -287,10 +415,10 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            background-color: rgba(45, 26, 18, 0.5);
+            margin-bottom: 5px; /* Reduced margin to make room for start button */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 15px;
-            border: 2px solid #b87333;
+            border: 3px solid #ff6b6b;
             padding: 10px;
             position: relative;
             overflow: hidden;
@@ -300,23 +428,25 @@
             width: 100%;
             height: 80%;
             position: relative;
-            background-color: rgba(26, 15, 11, 0.3);
+            background-color: rgba(255, 249, 240, 0.5);
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
         }
         
         .slice-item {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             cursor: pointer;
             transition: transform 0.1s;
+            z-index: 10;
         }
         
+        /* Original fruit and bomb styles */
         .fruit {
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF6B6B"/><path d="M30,30 Q50,10 70,30" stroke="%23FFE66D" stroke-width="5" fill="none"/></svg>');
         }
@@ -326,12 +456,14 @@
         }
         
         .slice-score {
-            font-size: clamp(14px, 4vw, 18px);
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.7);
-            padding: 5px 15px;
+            font-size: clamp(14px, 4vw, 20px);
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 20px;
             border-radius: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .slice-controls {
@@ -339,9 +471,11 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            margin-top: 10px; /* Added margin to lift the button higher */
+            padding-top: 10px;
         }
         
-        /* Catch Me Screen */
+        /* Catch Me Screen with Balls */
         .catch-me {
             display: none;
             height: 100%;
@@ -357,13 +491,15 @@
         }
         
         .catch-me-timer {
-            font-size: clamp(16px, 5vw, 20px);
+            font-size: clamp(16px, 5vw, 22px);
             font-weight: bold;
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.7);
-            padding: 5px 10px;
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 15px;
             border-radius: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .catch-me-area {
@@ -372,10 +508,10 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            background-color: rgba(45, 26, 18, 0.5);
+            margin-bottom: 5px; /* Reduced margin to make room for start button */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 15px;
-            border: 2px solid #b87333;
+            border: 3px solid #ff6b6b;
             padding: 10px;
             position: relative;
             overflow: hidden;
@@ -385,29 +521,32 @@
             width: 100%;
             height: 80%;
             position: relative;
-            background-color: rgba(26, 15, 11, 0.3);
+            background-color: rgba(255, 249, 240, 0.5);
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
         }
         
         .falling-item {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #f5e6c8;
+            border: 2px solid #ffd166;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 20px;
             transition: transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
+        /* Original ball and bomb styles */
         .falling-ball {
             background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
+            color: white;
         }
         
         .falling-bomb {
@@ -416,26 +555,39 @@
         }
         
         .basket {
-            width: 100px;
-            height: 60px;
-            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            width: 120px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
             border-radius: 10px 10px 0 0;
             position: absolute;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             cursor: pointer;
-            border: 2px solid #f5e6c8;
+            border: 3px solid #ffd166;
             transition: transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+        
+        .basket::before {
+            content: "🛒";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
         }
         
         .catch-score {
-            font-size: clamp(14px, 4vw, 18px);
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.7);
-            padding: 5px 15px;
+            font-size: clamp(14px, 4vw, 20px);
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 20px;
             border-radius: 10px;
-            border: 1px solid #b87333;
+            border: 2px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .catch-controls {
@@ -443,6 +595,8 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            margin-top: 10px; /* Added margin to lift the button higher */
+            padding-top: 10px;
         }
         
         /* Game End Screens */
@@ -453,7 +607,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(26, 15, 11, 0.95);
+            background-color: rgba(255, 249, 240, 0.95);
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -463,40 +617,50 @@
         }
         
         .end-message {
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: clamp(20px, 6vw, 28px);
             font-weight: bold;
             margin-bottom: 20px;
             text-align: center;
-            color: #D4AF37;
-            text-shadow: 1px 1px 2px #1a0f0b;
+            color: #ff6b6b;
+            text-shadow: 1px 1px 2px #ffd166;
+            font-family: 'Cinzel', serif;
         }
         
         .discount-earned {
-            font-size: clamp(24px, 6vw, 32px);
+            font-size: clamp(28px, 7vw, 36px);
             font-weight: bold;
             margin-bottom: 10px;
-            color: #b87333;
-            text-shadow: 1px 1px 2px #1a0f0b;
+            color: #4ecdc4;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-family: 'Cinzel', serif;
         }
         
         .validity-info {
-            font-size: clamp(12px, 3vw, 16px);
+            font-size: clamp(14px, 4vw, 18px);
             margin-bottom: 20px;
             text-align: center;
-            color: #f5e6c8;
+            color: #5c3d2e;
+            font-family: 'Kalam', cursive;
         }
         
         .action-button {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
             border: none;
             border-radius: 20px;
-            color: #1a0f0b;
+            color: #fff;
             font-weight: bold;
             cursor: pointer;
             margin: 5px;
-            border: 1px solid #f5e6c8;
-            font-size: clamp(12px, 3vw, 14px);
+            border: 2px solid #ffd166;
+            font-size: clamp(12px, 3vw, 16px);
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        
+        .action-button:hover {
+            transform: scale(1.05);
         }
         
         /* Active Offer Display */
@@ -504,23 +668,25 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: linear-gradient(135deg, #D4AF37 0%, #b87333 100%);
-            padding: 8px 12px;
+            background: linear-gradient(135deg, #ffd166 0%, #ffb347 100%);
+            padding: 10px 15px;
             border-radius: 10px;
-            color: #1a0f0b;
+            color: #5c3d2e;
             font-weight: bold;
             z-index: 50;
             display: none;
-            border: 1px solid #f5e6c8;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            border: 2px solid #ff6b6b;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-family: 'Cinzel', serif;
         }
         
         .offer-value {
-            font-size: clamp(14px, 4vw, 16px);
+            font-size: clamp(14px, 4vw, 18px);
         }
         
         .offer-timer {
             font-size: clamp(10px, 3vw, 12px);
+            font-family: 'Kalam', cursive;
         }
         
         /* Offers Screen */
@@ -540,8 +706,9 @@
         }
         
         .offers-title {
-            font-size: clamp(18px, 5vw, 24px);
-            color: #D4AF37;
+            font-size: clamp(18px, 5vw, 26px);
+            color: #ff6b6b;
+            font-family: 'Cinzel', serif;
         }
         
         .offers-container {
@@ -553,30 +720,33 @@
         }
         
         .offer-card {
-            background: linear-gradient(135deg, #b87333 0%, #D4AF37 100%);
+            background: linear-gradient(135deg, #ffd166 0%, #ffb347 100%);
             border-radius: 10px;
             padding: 15px;
-            color: #1a0f0b;
+            color: #5c3d2e;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            border: 1px solid #f5e6c8;
+            border: 2px solid #ff6b6b;
             position: relative;
         }
         
         .offer-card h3 {
-            font-size: clamp(14px, 4vw, 18px);
+            font-size: clamp(14px, 4vw, 20px);
             margin-bottom: 5px;
+            font-family: 'Cinzel', serif;
         }
         
         .offer-card p {
-            font-size: clamp(12px, 3vw, 14px);
+            font-size: clamp(12px, 3vw, 16px);
             margin-bottom: 10px;
+            font-family: 'Kalam', cursive;
         }
         
         .offer-card .validity {
-            font-size: clamp(10px, 3vw, 12px);
-            color: #1a0f0b;
+            font-size: clamp(10px, 3vw, 14px);
+            color: #5c3d2e;
             opacity: 0.8;
             margin-bottom: 10px;
+            font-family: 'Kalam', cursive;
         }
         
         .offer-actions {
@@ -587,14 +757,15 @@
         
         .redeem-offer-btn {
             padding: 8px 15px;
-            background: #1a0f0b;
-            color: #D4AF37;
+            background: #ff6b6b;
+            color: #fff;
             border: none;
             border-radius: 15px;
             font-weight: bold;
             cursor: pointer;
-            border: 1px solid #f5e6c8;
-            font-size: clamp(10px, 3vw, 12px);
+            border: 2px solid #ffd166;
+            font-size: clamp(10px, 3vw, 14px);
+            font-family: 'Cinzel', serif;
         }
         
         .expired-offer {
@@ -605,20 +776,21 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: #1a0f0b;
-            color: #D4AF37;
+            background: #ff6b6b;
+            color: #fff;
             padding: 3px 8px;
             border-radius: 10px;
             font-size: 10px;
             font-weight: bold;
+            font-family: 'Cinzel', serif;
         }
         
         .back-button {
             position: absolute;
             top: 15px;
             left: 15px;
-            background-color: #b87333;
-            color: #1a0f0b;
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b6b 100%);
+            color: #fff;
             border: none;
             border-radius: 50%;
             width: 40px;
@@ -627,8 +799,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border: 1px solid #f5e6c8;
+            border: 2px solid #ffd166;
             z-index: 10;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .start-notification {
@@ -636,14 +810,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: clamp(24px, 6vw, 32px);
+            font-size: clamp(24px, 6vw, 36px);
             font-weight: bold;
-            color: #D4AF37;
-            background-color: rgba(26, 15, 11, 0.8);
+            color: #ff6b6b;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 20px 40px;
             border-radius: 15px;
             z-index: 90;
             display: none;
+            border: 3px solid #ffd166;
+            font-family: 'Cinzel', serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         /* Mobile-specific adjustments */
@@ -659,8 +836,54 @@
             }
             
             .basket {
-                width: 80px;
-                height: 50px;
+                width: 100px;
+                height: 60px;
+            }
+            
+            .location-date-box {
+                padding: 0 10px;
+            }
+            
+            .location {
+                font-size: clamp(9px, 2.2vw, 12px);
+            }
+            
+            .date {
+                font-size: clamp(12px, 3vw, 18px);
+            }
+            
+            /* Ensure start buttons are visible on curved screens */
+            .slice-controls, .catch-controls {
+                margin-top: 15px;
+                padding-top: 15px;
+                min-height: 70px;
+            }
+            
+            .action-button {
+                padding: 15px 30px;
+                font-size: 16px;
+                margin: 10px;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 360px) {
+            .location {
+                font-size: 8px;
+            }
+            
+            .date {
+                font-size: 12px;
+            }
+            
+            .slice-controls, .catch-controls {
+                margin-top: 20px;
+                padding-top: 20px;
+            }
+            
+            .action-button {
+                padding: 18px 35px;
+                font-size: 18px;
             }
         }
     </style>
@@ -671,6 +894,12 @@
         <div class="header-banner">
             <h1>Bite Me's Games</h1>
             <div class="points-display">100</div>
+        </div>
+        
+        <!-- Location and Date Box -->
+        <div class="location-date-box">
+            <div class="location">Adarsha Shikshana Samiti's College (A.S.S College), Near Hockey Ground Gadag</div>
+            <div class="date">18/12/2025</div>
         </div>
         
         <div class="game-selectors">
@@ -1023,7 +1252,7 @@
             // Clear card grid
             cardGrid.innerHTML = '';
             
-            // Create card pairs (12 pairs = 24 cards)
+            // Create card pairs (12 pairs = 24 cards) with fruit symbols
             const symbols = ['🍎', '🍌', '🍒', '🍇', '🍊', '🍓', '🍉', '🍑', '🥭', '🍍', '🥝', '🍋'];
             
             // Duplicate symbols to create pairs
@@ -1151,7 +1380,7 @@
             showMainScreen();
         }
         
-        // Slice Me Functions
+        // Slice Me Functions - Original Version
         function resetSliceMe() {
             sliceMeTimeLeft = 15;
             sliceMeScoreValue = 0;
@@ -1200,7 +1429,7 @@
             
             // Random position at the bottom
             const stageRect = sliceStage.getBoundingClientRect();
-            const x = Math.random() * (stageRect.width - 60);
+            const x = Math.random() * (stageRect.width - 70);
             item.style.left = `${x}px`;
             item.style.bottom = '0px';
             
@@ -1208,9 +1437,9 @@
             sliceStage.appendChild(item);
             sliceItems.push(item);
             
-            // Animate item moving upward - 10x to 20x faster
+            // Animate item moving upward
             let position = 0;
-            const speed = (10 + Math.random() * 10); // 10x to 20x faster
+            const speed = (8 + Math.random() * 8);
             
             const moveItem = setInterval(() => {
                 if (!sliceMeGameActive) {
@@ -1265,7 +1494,6 @@
             sliceItems = [];
             
             // Calculate discount based on score (max 30%, advertised as 50%)
-            // With high speed and bombs, it's very hard to score high
             sliceMeDiscountValue = Math.min(30, Math.floor(sliceMeScoreValue / 5));
             
             sliceMeEndScreen.style.display = 'flex';
@@ -1294,7 +1522,7 @@
             showMainScreen();
         }
         
-        // Catch Me Functions
+        // Catch Me Functions - Original Version with Current Speed
         function resetCatchMe() {
             catchMeTimeLeft = 20;
             catchMeScoreValue = 0;
@@ -1333,15 +1561,15 @@
                 }
             }, 1000);
             
-            // Start generating falling items (balls and bombs)
-            fallingItemInterval = setInterval(createFallingItem, 350); // Reduced interval for more items
+            // Start generating falling items (balls and bombs) with current speed
+            fallingItemInterval = setInterval(createFallingItem, 350); // Current speed
         }
         
         function createFallingItem() {
             if (!catchMeGameActive) return;
             
             const item = document.createElement('div');
-            // Increased bomb probability to 40% for more challenge
+            // Bomb probability 40% for more challenge
             const isBomb = Math.random() < 0.4;
             
             item.className = `falling-item ${isBomb ? 'falling-bomb' : 'falling-ball'}`;
@@ -1350,7 +1578,7 @@
             
             // Random position at the top
             const containerRect = catchContainer.getBoundingClientRect();
-            const x = Math.random() * (containerRect.width - 30);
+            const x = Math.random() * (containerRect.width - 40);
             item.style.left = `${x}px`;
             item.style.top = '0px';
             
@@ -1358,9 +1586,9 @@
             catchContainer.appendChild(item);
             fallingItems.push(item);
             
-            // Animate item falling at high speed - increased speed for challenge
+            // Animate item falling at current speed
             let position = 0;
-            const speed = 12 + Math.random() * 12; // Increased speed range
+            const speed = 12 + Math.random() * 12; // Current speed
             
             const moveItem = setInterval(() => {
                 if (!catchMeGameActive) {
@@ -1465,8 +1693,6 @@
             fallingItems = [];
             
             // Calculate discount based on score with balanced difficulty
-            // 20 points = 5% discount, but with increased difficulty
-            // Most players will get 15%, only 2% will get 20%
             let baseDiscount = Math.floor(catchMeScoreValue / 20) * 5;
             
             // Add skill-based adjustment (only 2% of players will get this)
